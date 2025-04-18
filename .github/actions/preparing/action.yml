@@ -1,0 +1,12 @@
+name: Preparing to patch
+runs:
+  using: "composite"
+  steps:
+    - name: Cài JDK
+      uses: actions/setup-java@v4.7.1
+      with:
+        distribution: 'zulu'
+        java-version: '21'
+#    - name: Setup Cloudflare Warp
+#      shell: bash
+#      run: bash src/etc/cf_warp.sh
