@@ -1,4 +1,4 @@
-name: Check new patch
+name: Bản Revanced Mới
 permissions: write-all
 on:
   schedule:
@@ -11,7 +11,7 @@ on:
         default: '1'
 jobs:
   check:
-    name: Check new patch
+    name: Kiểm trá bản vá
     runs-on: ubuntu-latest
     env:
       repository: ${{ github.repository }}
