@@ -1,4 +1,4 @@
-name: Bản Revanced Mới
+name: Bản Revanced mới hơn
 permissions: write-all
 on:
   schedule:
@@ -11,7 +11,7 @@ on:
         default: '1'
 jobs:
   check:
-    name: Kiểm trá bản vá
+    name: Kiểm tra nguồn vá
     runs-on: ubuntu-latest
     env:
       repository: ${{ github.repository }}
@@ -56,29 +56,6 @@ jobs:
         run: bash src/etc/ci.sh Aunali321/ReVancedExperiments latest telegram-revanced-experiments.apk
       - name: Keep workflow run
         uses: gautamkrishnar/keepalive-workflow@v1
-      - name: Re-run workflow if github connection not stable
-        if: always() && steps.check-rv.outcome == 'skipped' && env.retry_count < env.max_retries
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const maxRetries = ${{ env.max_retries }};
-            let retryCount = ${{ env.retry_count }};
-            if (retryCount < maxRetries) {
-              retryCount += 1;
-              await github.rest.actions.createWorkflowDispatch({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                workflow_id: "ci.yml",
-                ref: context.ref,
-                inputs: {
-                  'retry_count': String(retryCount)
-                }
-              });
-            }
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          retry_count: ${{ github.event.inputs.retry_count }}
-          max_retries: 3
     outputs:
       check_rv: ${{ steps.check-rv.outputs.new_patch }}
       check_rv_beta: ${{ steps.check-rv-beta.outputs.new_patch }}
@@ -177,3 +154,4 @@ jobs:
     uses: ./.github/workflows/manual-patch.yml
     with:
       org: "Revanced Experiments"
+      
